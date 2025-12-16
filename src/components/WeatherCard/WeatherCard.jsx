@@ -1,4 +1,7 @@
-import { weatherOptions } from "../../utils/constants.js";
+import {
+  weatherOptions,
+  defaultWeatherOptions,
+} from "../../utils/constants.js";
 import "./WeatherCard.css";
 
 function WeatherCard({ weatherData }) {
@@ -9,14 +12,21 @@ function WeatherCard({ weatherData }) {
     );
   });
 
-  const weatherOptionUrl = filteredOptions[0]?.url;
+  let weatherOptionUrl;
+
+  if (filteredOptions.length === 0) {
+    weatherOptionUrl =
+      defaultWeatherOptions[weatherData.isDay ? "day" : "night"].url;
+  } else {
+    weatherOptionUrl = filteredOptions[0]?.url;
+  }
 
   return (
     <section className="weather-card">
       <p className="weather-card__temp">{weatherData.temp.F}°F</p>
       <img
         src={weatherOptionUrl}
-        alt="Weather Today"
+        alt="Weather right now"
         className="weather-card__image"
       />
     </section>

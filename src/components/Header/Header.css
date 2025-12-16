@@ -49,3 +49,21 @@
 .header__avatar {
   margin-left: 88px;
 }
+
+@media screen and (max-width: 630px) {
+  .header {
+    flex-direction: column;
+  }
+
+  .header__avatar {
+    visibility: hidden;
+  }
+
+  .header__username {
+    visibility: hidden;
+  }
+
+  .header__add-clothes-btn {
+    visibility: hidden;
+  }
+}
