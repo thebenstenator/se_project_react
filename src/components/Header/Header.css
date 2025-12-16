@@ -21,6 +21,20 @@
   margin-right: 24px;
 }
 
+.header__menu-btn {
+  background-color: #ffffff;
+  background-image: url("../../assets/hamburger_bars.png");
+  background-position: center;
+  border: none;
+  border-radius: 10px;
+  background-repeat: no-repeat;
+  padding: 0;
+  width: 44px;
+  height: 44px;
+  visibility: hidden;
+  position: absolute;
+}
+
 .header__add-clothes-btn {
   margin-left: auto;
   margin-right: 20px;
@@ -53,6 +67,8 @@
 @media screen and (max-width: 630px) {
   .header {
     flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
   }
 
   .header__avatar {
@@ -65,5 +81,16 @@
 
   .header__add-clothes-btn {
     visibility: hidden;
+  }
+
+  .header__logo {
+    margin: 0 0 32px;
+  }
+
+  .header__menu-btn {
+    visibility: visible;
+    position: absolute;
+    top: 18px;
+    right: 16px;
   }
 }

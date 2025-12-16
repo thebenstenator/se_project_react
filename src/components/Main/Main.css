@@ -16,3 +16,10 @@
   margin: 34px 0 40px;
   color: #000;
 }
+
+@media screen and (max-width: 630px) {
+  .cards__list {
+    gap: 10px;
+    margin-bottom: 147px;
+  }
+}
