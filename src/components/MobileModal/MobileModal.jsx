@@ -1,10 +1,10 @@
 import avatar from "../../assets/avatar.svg";
 
-function MobileModal({ activeModal, handleCloseClick, handleAddClick }) {
+function MobileModal({ activeModal, handleCloseClick, handleAddClick, name }) {
   return (
     <div
       className={`modal ${
-        activeModal === "mobile" ? "modal_opened" : ""
+        activeModal === name ? "modal_opened" : ""
       } modal_type_mobile`}
     >
       <div className="modal__content modal__content_type_mobile">

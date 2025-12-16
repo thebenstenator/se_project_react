@@ -33,6 +33,7 @@
   height: 44px;
   visibility: hidden;
   position: absolute;
+  cursor: pointer;
 }
 
 .header__add-clothes-btn {

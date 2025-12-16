@@ -10,7 +10,7 @@ function Header({ handleAddClick, weatherData, handleMobileClick }) {
 
   return (
     <header className="header">
-      <img src={logo} alt="logo" className="header__logo" />
+      <img src={logo} alt="wtwr logo" className="header__logo" />
       <button
         className="header__menu-btn"
         type="button"

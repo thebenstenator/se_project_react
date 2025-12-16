@@ -74,6 +74,7 @@
   height: 21px;
   top: 11px;
   right: 11px;
+  cursor: pointer;
 }
 
 .modal__image {
@@ -193,17 +194,22 @@
     align-items: flex-end;
   }
 
-  .modal__content {
-    padding: 32px 16px;
-  }
-
   .modal_type_mobile {
     padding: 16px;
     align-items: flex-start;
   }
 
+  .modal_type_item {
+    align-items: center;
+  }
+
+  .modal__content {
+    padding: 32px 16px;
+  }
+
   .modal__content_type_item {
     max-width: 343px;
+    padding: 0;
   }
 
   .modal__footer {
