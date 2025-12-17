@@ -1,8 +1,3 @@
-@font-face {
-  font-family: Cabinet Grotesk;
-  src: url("../../vendor/CabinetGrotesk-Regular.woff") format("woff");
-}
-
 .footer {
   margin-top: 85px;
   display: flex;

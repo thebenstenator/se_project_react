@@ -1,8 +1,3 @@
-@font-face {
-  font-family: Cabinet Grotesk;
-  src: url("../../vendor/CabinetGrotesk-Regular.woff") format("woff");
-}
-
 .modal {
   position: fixed;
   top: 0;
@@ -50,7 +45,7 @@
 
 .modal__close {
   background: none;
-  background-image: url("../../assets/modal_close.png");
+  background-image: url("../../assets/modal_close_gray.png");
   background-repeat: no-repeat;
   border: none;
   position: absolute;
@@ -63,6 +58,7 @@
 }
 
 .modal__close_type_item {
+  background-image: url("../../assets/modal_close_white.png");
   width: 16px;
   height: 16px;
   top: 26px;
@@ -70,6 +66,7 @@
 }
 
 .modal__close_type_mobile {
+  background-image: url("../../assets/modal_close_black.png");
   width: 21px;
   height: 21px;
   top: 11px;
