@@ -21,38 +21,6 @@ WTWR is a weather-based clothing recommendation application that helps users dec
 - **Vite** - Build tool and development server
 - **Responsive Design** - Mobile-first approach
 
-## Installation
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/thebenstenator/se_project_react.git
-```
-
-2. Navigate to the project directory:
-
-```bash
-cd se_project_react
-```
-
-3. Install dependencies:
-
-```bash
-npm install
-```
-
-4. Add your OpenWeatherMap API key in `src/utils/constants.js`:
-
-```javascript
-export const APIkey = "your_api_key_here";
-```
-
-5. Run the development server:
-
-```bash
-npm run dev
-```
-
 ## How to Use
 
 1. The app displays current weather conditions for your location
