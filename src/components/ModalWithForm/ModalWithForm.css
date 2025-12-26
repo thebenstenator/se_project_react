@@ -136,6 +136,7 @@
   border-radius: 4px;
   background-color: rgba(0, 0, 0);
   color: #ffffff;
+  cursor: pointer;
 }
 
 .modal__submit:hover {
