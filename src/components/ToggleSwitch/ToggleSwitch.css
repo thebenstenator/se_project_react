@@ -10,6 +10,18 @@
   position: relative;
 }
 
+.toggle-switch:hover {
+  border-color: #000000;
+}
+
+.toggle-switch:hover .toggle-switch__slider {
+  left: 0px;
+}
+
+.toggle-switch:hover .toggle-swith__checkbox:checked ~ .toggle-switch__slider {
+  left: 24px;
+}
+
 .toggle-swith__checkbox {
   opacity: 0;
 }
