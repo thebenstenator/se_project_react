@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import {
   coordinates,
@@ -11,6 +11,7 @@ import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import ItemModal from "../ItemModal/ItemModal";
 import MobileModal from "../MobileModal/MobileModal";
+import Profile from "../Profile/Profile";
 import { getWeather } from "../../utils/weatherApi";
 import { filterWeatherData } from "../../utils/weatherApi";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
@@ -81,11 +82,28 @@ function App() {
             weatherData={weatherData}
             handleMobileClick={handleMobileClick}
           />
-          <Main
-            weatherData={weatherData}
-            handleCardClick={handleCardClick}
-            clothingItems={clothingItems}
-          />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Main
+                  weatherData={weatherData}
+                  handleCardClick={handleCardClick}
+                  clothingItems={clothingItems}
+                />
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <Profile
+                  clothingItems={clothingItems}
+                  handleCardClick={handleCardClick}
+                />
+              }
+            />
+          </Routes>
+
           <Footer />
         </div>
         <AddItemModal
