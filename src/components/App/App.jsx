@@ -12,10 +12,11 @@ import Footer from "../Footer/Footer";
 import ItemModal from "../ItemModal/ItemModal";
 import MobileModal from "../MobileModal/MobileModal";
 import Profile from "../Profile/Profile";
-import { getWeather } from "../../utils/weatherApi";
-import { filterWeatherData } from "../../utils/weatherApi";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import AddItemModal from "../AddItemModal/AddItemModal";
+import DeleteModal from "../DeleteModal/DeleteModal";
+import { getWeather } from "../../utils/weatherApi";
+import { filterWeatherData } from "../../utils/weatherApi";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -43,6 +44,10 @@ function App() {
 
   const handleMobileClick = () => {
     setActiveModal("mobile");
+  };
+
+  const handleDeleteClick = () => {
+    setActiveModal("delete-confirmation");
   };
 
   const closeModal = () => {
@@ -116,11 +121,17 @@ function App() {
           activeModal={activeModal}
           card={selectedCard}
           handleCloseClick={closeModal}
+          handleDeleteClick={handleDeleteClick}
         />
         <MobileModal
           name="mobile"
           handleCloseClick={closeModal}
           handleAddClick={handleAddClick}
+          activeModal={activeModal}
+        />
+        <DeleteModal
+          handleCloseClick={closeModal}
+          name="delete-confirmation"
           activeModal={activeModal}
         />
       </div>

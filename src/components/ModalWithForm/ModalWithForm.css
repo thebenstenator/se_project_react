@@ -186,6 +186,19 @@
   margin-left: 12px;
 }
 
+.modal__delete-button {
+  position: absolute;
+  bottom: 74px;
+  right: 34px;
+  color: #ff4d00;
+  background-color: transparent;
+  border: none;
+  font-family: "Cabinet Grotesk";
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.2;
+}
+
 @media screen and (max-width: 630px) {
   .modal {
     padding: 0;

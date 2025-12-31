@@ -1,6 +1,12 @@
 import "./ItemModal.css";
 
-function ItemModal({ activeModal, card, handleCloseClick, name }) {
+function ItemModal({
+  activeModal,
+  card,
+  handleCloseClick,
+  name,
+  handleDeleteClick,
+}) {
   return (
     <div
       className={`modal ${
@@ -22,6 +28,13 @@ function ItemModal({ activeModal, card, handleCloseClick, name }) {
             </div>
           </>
         )}
+        <button
+          className="modal__delete-button"
+          type="button"
+          onClick={handleDeleteClick}
+        >
+          Delete item
+        </button>
       </div>
     </div>
   );
