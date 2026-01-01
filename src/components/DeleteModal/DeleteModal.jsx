@@ -1,6 +1,16 @@
 import "./DeleteModal.css";
 
-function DeleteModal({ name, activeModal, handleCloseClick }) {
+function DeleteModal({
+  name,
+  activeModal,
+  handleCloseClick,
+  onDeleteItem,
+  card,
+}) {
+  const handleDelete = () => {
+    onDeleteItem(card);
+  };
+
   return (
     <div
       className={`modal ${
@@ -16,7 +26,11 @@ function DeleteModal({ name, activeModal, handleCloseClick }) {
           Are you sure you want to delete this item?
           <span className="modal__span">This action is irreversible.</span>
         </p>
-        <button className="modal__confirm-delete-button" type="submit">
+        <button
+          className="modal__confirm-delete-button"
+          type="submit"
+          onClick={handleDelete}
+        >
           Yes, delete item
         </button>
         <button
