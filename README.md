@@ -1,5 +1,9 @@
 # WTWR (What to Wear?)
 
+## Demo
+
+**[📹 View Project Pitch Video](https://drive.google.com/file/d/1kDUVSfD0m9dkKPm2lajOErpYvWMUsQj/view?usp=sharing)**
+
 ## About the Project
 
 WTWR is a weather-based clothing recommendation application that helps users decide what to wear based on current weather conditions. The app fetches real-time weather data and suggests appropriate clothing items for the temperature.

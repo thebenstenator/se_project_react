@@ -170,12 +170,21 @@
   font-weight: 700;
   font-size: 20px;
   line-height: 1.2;
+  cursor: pointer;
 }
 
 .modal__user-container {
   display: flex;
   justify-content: center;
   margin-bottom: 24px;
+  font-family: "Cabinet Grotesk";
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.modal__username {
   font-family: "Cabinet Grotesk";
   font-weight: 700;
   font-size: 20px;
