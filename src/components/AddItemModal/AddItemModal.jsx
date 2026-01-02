@@ -3,11 +3,11 @@ import { useForm } from "../../hooks/useForm";
 
 const AddItemModal = ({ activeModal, onAddItem, handleCloseClick }) => {
   const defaultValues = { name: "", imageUrl: "", weather: "" };
-  const { values, handleChange } = useForm(defaultValues);
+  const { values, handleChange, handleReset } = useForm(defaultValues);
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    onAddItem(values);
+    onAddItem(values, handleReset);
   }
 
   return (

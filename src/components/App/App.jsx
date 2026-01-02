@@ -50,7 +50,7 @@ function App() {
     setActiveModal("");
   };
 
-  const onAddItem = (inputValues) => {
+  const onAddItem = (inputValues, handleReset) => {
     const newCardData = {
       name: inputValues.name,
       weather: inputValues.weather,
@@ -59,8 +59,9 @@ function App() {
 
     addItem(newCardData)
       .then((data) => {
-        setClothingItems([data, ...clothingItems]);
+        setClothingItems((prev) => [data, ...prev]);
         closeModal();
+        handleReset();
       })
       .catch(console.error);
   };
@@ -68,8 +69,8 @@ function App() {
   const onDeleteItem = (selectedCard) => {
     removeItem(selectedCard._id)
       .then(() => {
-        setClothingItems(
-          clothingItems.filter((item) => item._id !== selectedCard._id)
+        setClothingItems((prev) =>
+          prev.filter((item) => item._id !== selectedCard._id)
         );
         closeModal();
       })
@@ -120,6 +121,7 @@ function App() {
                 <Profile
                   clothingItems={clothingItems}
                   handleCardClick={handleCardClick}
+                  handleAddClick={handleAddClick}
                 />
               }
             />
