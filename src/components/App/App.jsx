@@ -67,10 +67,10 @@ function App() {
   };
 
   const onDeleteItem = (selectedCard) => {
-    removeItem(selectedCard._id)
+    removeItem(selectedCard.id)
       .then(() => {
         setClothingItems((prev) =>
-          prev.filter((item) => item._id !== selectedCard._id)
+          prev.filter((item) => item.id !== selectedCard.id)
         );
         closeModal();
       })

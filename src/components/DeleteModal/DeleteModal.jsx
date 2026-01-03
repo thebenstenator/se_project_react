@@ -1,4 +1,5 @@
 import "./DeleteModal.css";
+import { useModalHandlers } from "../../hooks/useModalHandlers";
 
 function DeleteModal({
   name,
@@ -7,6 +8,13 @@ function DeleteModal({
   onDeleteItem,
   card,
 }) {
+  const { handleOverlayMouseDown } = useModalHandlers(
+    activeModal,
+    name,
+    handleCloseClick,
+    { esc: true }
+  );
+
   const handleDelete = () => {
     onDeleteItem(card);
   };
@@ -16,6 +24,7 @@ function DeleteModal({
       className={`modal ${
         activeModal === name ? "modal_opened" : ""
       } modal_type_delete`}
+      onMouseDown={handleOverlayMouseDown}
     >
       <div className="modal__content modal__content_type_delete">
         <button

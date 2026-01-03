@@ -1,4 +1,5 @@
 import "./ItemModal.css";
+import { useModalHandlers } from "../../hooks/useModalHandlers";
 
 function ItemModal({
   activeModal,
@@ -7,11 +8,19 @@ function ItemModal({
   name,
   handleDeleteClick,
 }) {
+  const { handleOverlayMouseDown } = useModalHandlers(
+    activeModal,
+    name,
+    handleCloseClick,
+    { esc: true }
+  );
+
   return (
     <div
       className={`modal ${
         activeModal === name ? "modal_opened" : ""
       } modal_type_item`}
+      onMouseDown={handleOverlayMouseDown}
     >
       <div className="modal__content modal__content_type_item">
         <button

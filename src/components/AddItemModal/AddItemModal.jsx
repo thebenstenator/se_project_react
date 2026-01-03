@@ -1,12 +1,22 @@
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import { useForm } from "../../hooks/useForm";
+import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 
 const AddItemModal = ({ activeModal, onAddItem, handleCloseClick }) => {
   const defaultValues = { name: "", imageUrl: "", weather: "" };
-  const { values, handleChange, handleReset } = useForm(defaultValues);
+  const {
+    values,
+    handleChange,
+    handleReset,
+    errors,
+    isValid,
+    validateForm,
+    isSubmitted,
+  } = useFormWithValidation(defaultValues);
 
   function handleSubmit(evt) {
     evt.preventDefault();
+    const valid = validateForm();
+    if (!valid) return;
     onAddItem(values, handleReset);
   }
 
@@ -24,26 +34,26 @@ const AddItemModal = ({ activeModal, onAddItem, handleCloseClick }) => {
         <input
           type="text"
           name="name"
-          className="modal__input"
+          className={"modal__input " + (isSubmitted && errors.name ? "modal__input_invalid" : "")}
           id="name"
           placeholder="Name"
-          required
-          value={values.name}
+          value={values.name || ""}
           onChange={handleChange}
         />
+        <span className={"modal__error " + (isSubmitted && errors.name ? "modal__error_visible" : "")}>{errors.name}</span>
       </label>
       <label htmlFor="imageUrl" className="modal__label">
         Image URL{""}
         <input
-          type="url"
+          type="text"
           name="imageUrl"
-          className="modal__input"
+          className={"modal__input " + (isSubmitted && errors.imageUrl ? "modal__input_invalid" : "")}
           id="imageUrl"
           placeholder="Image URL"
-          required
-          value={values.imageUrl}
+          value={values.imageUrl || ""}
           onChange={handleChange}
         />
+        <span className={"modal__error " + (isSubmitted && errors.imageUrl ? "modal__error_visible" : "")}>{errors.imageUrl}</span>
       </label>
       <fieldset
         role="radiogroup"
@@ -54,36 +64,40 @@ const AddItemModal = ({ activeModal, onAddItem, handleCloseClick }) => {
         <label htmlFor="hot" className="modal__label modal__label_type_radio">
           <input
             type="radio"
-            className="modal__radio-input"
+            className={"modal__radio-input " + (isSubmitted && errors.weather ? "modal__input_invalid" : "")}
             id="hot"
             name="weather"
             value="hot"
             onChange={handleChange}
+            checked={values.weather === "hot"}
           />
           Hot
         </label>
         <label htmlFor="warm" className="modal__label modal__label_type_radio">
           <input
             type="radio"
-            className="modal__radio-input"
+            className={"modal__radio-input " + (isSubmitted && errors.weather ? "modal__input_invalid" : "")}
             id="warm"
             name="weather"
             value="warm"
             onChange={handleChange}
+            checked={values.weather === "warm"}
           />
           Warm
         </label>
         <label htmlFor="cold" className="modal__label modal__label_type_radio">
           <input
             type="radio"
-            className="modal__radio-input"
+            className={"modal__radio-input " + (isSubmitted && errors.weather ? "modal__input_invalid" : "")}
             id="cold"
             name="weather"
             value="cold"
             onChange={handleChange}
+            checked={values.weather === "cold"}
           />
           Cold
         </label>
+        <span className={"modal__error " + (isSubmitted && errors.weather ? "modal__error_visible" : "")}>{errors.weather}</span>
       </fieldset>
     </ModalWithForm>
   );

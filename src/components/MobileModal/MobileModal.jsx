@@ -1,11 +1,20 @@
 import avatar from "../../assets/avatar.svg";
+import { useModalHandlers } from "../../hooks/useModalHandlers";
 
 function MobileModal({ activeModal, handleCloseClick, handleAddClick, name }) {
+  const { handleOverlayMouseDown } = useModalHandlers(
+    activeModal,
+    name,
+    handleCloseClick,
+    { esc: false }
+  );
+
   return (
     <div
       className={`modal ${
         activeModal === name ? "modal_opened" : ""
       } modal_type_mobile`}
+      onMouseDown={handleOverlayMouseDown}
     >
       <div className="modal__content modal__content_type_mobile">
         <button

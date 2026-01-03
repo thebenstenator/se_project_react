@@ -1,4 +1,5 @@
 import "./ModalWithForm.css";
+import { useModalHandlers } from "../../hooks/useModalHandlers";
 
 function ModalWithForm({
   children,
@@ -9,8 +10,18 @@ function ModalWithForm({
   name,
   onSubmit,
 }) {
+  const { handleOverlayMouseDown } = useModalHandlers(
+    activeModal,
+    name,
+    handleCloseClick,
+    { esc: true }
+  );
+
   return (
-    <div className={`modal ${activeModal === name ? "modal_opened" : ""}`}>
+    <div
+      className={`modal ${activeModal === name ? "modal_opened" : ""}`}
+      onMouseDown={handleOverlayMouseDown}
+    >
       <div className="modal__content">
         <h2 className="modal__title">{title}</h2>
         <button
