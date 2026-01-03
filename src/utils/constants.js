@@ -71,8 +71,9 @@ export const defaultWeatherOptions = {
 };
 
 export const coordinates = {
-  latitude: 40.3141,
-  longitude: -112.0069,
+  // intentionally in the ocean — used as a visible default when users decline geolocation
+  latitude: 0,
+  longitude: 0,
 };
 
 export const apiKey = "3f571043cb6f51f9300ce0d6d28da77e";

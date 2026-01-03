@@ -8,6 +8,17 @@
   margin: 0 auto;
 }
 
+.page__location-notice {
+  background: #fff4e5;
+  border-left: 4px solid #ffb74d;
+  padding: 8px 12px;
+  margin: 12px 0;
+  font-family: "Cabinet Grotesk";
+  font-weight: 700;
+  font-size: 14px;
+  color: #5a3e00;
+}
+
 @media screen and (max-width: 630px) {
   .page {
     padding: 20px 16px;

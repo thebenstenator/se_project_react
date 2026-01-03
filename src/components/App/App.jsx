@@ -24,6 +24,7 @@ function App() {
   const [selectedCard, setSelectedCard] = useState(null);
   const [clothingItems, setClothingItems] = useState([]);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+  const [usingDefaultLocation, setUsingDefaultLocation] = useState(false);
 
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
@@ -78,12 +79,35 @@ function App() {
   };
 
   useEffect(() => {
-    getWeather(coordinates, apiKey)
-      .then((data) => {
-        const filteredData = filterWeatherData(data);
-        setWeatherData(filteredData);
-      })
-      .catch(console.error);
+    const fetchAndSetWeather = (coords) => {
+      getWeather(coords, apiKey)
+        .then((data) => {
+          const filteredData = filterWeatherData(data);
+          setWeatherData(filteredData);
+        })
+        .catch(console.error);
+    };
+
+    if (navigator && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUsingDefaultLocation(false);
+          fetchAndSetWeather({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        (error) => {
+          console.warn("Geolocation failed, using default coordinates:", error);
+          setUsingDefaultLocation(true);
+          fetchAndSetWeather(coordinates);
+        },
+        { timeout: 10000 }
+      );
+    } else {
+      setUsingDefaultLocation(true);
+      fetchAndSetWeather(coordinates);
+    }
 
     getItems()
       .then((data) => {
@@ -104,6 +128,12 @@ function App() {
             weatherData={weatherData}
             handleMobileClick={handleMobileClick}
           />
+          {usingDefaultLocation && (
+            <div className="page__location-notice">
+              Location not available — showing a default (ocean) location. Enable
+              location access to see weather for your area.
+            </div>
+          )}
           <Routes>
             <Route
               path="/"
