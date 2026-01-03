@@ -71,8 +71,8 @@ export const defaultWeatherOptions = {
 };
 
 export const coordinates = {
-  // intentionally in the ocean — used as a visible default when users decline geolocation
-  latitude: 0,
+  // intentionally set to the North Pole — used as a visible default when users decline geolocation
+  latitude: 90,
   longitude: 0,
 };
 

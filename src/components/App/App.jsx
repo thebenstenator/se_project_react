@@ -25,6 +25,8 @@ function App() {
   const [clothingItems, setClothingItems] = useState([]);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [usingDefaultLocation, setUsingDefaultLocation] = useState(false);
+  const [manualLat, setManualLat] = useState("");
+  const [manualLng, setManualLng] = useState("");
 
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
@@ -78,16 +80,16 @@ function App() {
       .catch(console.error);
   };
 
-  useEffect(() => {
-    const fetchAndSetWeather = (coords) => {
-      getWeather(coords, apiKey)
-        .then((data) => {
-          const filteredData = filterWeatherData(data);
-          setWeatherData(filteredData);
-        })
-        .catch(console.error);
-    };
+  const fetchAndSetWeather = (coords) => {
+    getWeather(coords, apiKey)
+      .then((data) => {
+        const filteredData = filterWeatherData(data);
+        setWeatherData(filteredData);
+      })
+      .catch(console.error);
+  };
 
+  useEffect(() => {
     if (navigator && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -116,6 +118,16 @@ function App() {
       .catch(console.error);
   }, []);
 
+  const handleManualSubmit = (evt) => {
+    evt.preventDefault();
+    const lat = parseFloat(manualLat);
+    const lon = parseFloat(manualLng);
+    if (Number.isFinite(lat) && Number.isFinite(lon)) {
+      setUsingDefaultLocation(false);
+      fetchAndSetWeather({ latitude: lat, longitude: lon });
+    }
+  };
+
   return (
     <CurrentTemperatureUnitContext.Provider
       value={{ currentTemperatureUnit, handleToggleSwitchChange }}
@@ -130,8 +142,35 @@ function App() {
           />
           {usingDefaultLocation && (
             <div className="page__location-notice">
-              Location not available — showing a default (ocean) location. Enable
-              location access to see weather for your area.
+              <div>
+                Location not available — showing weather at the North Pole.
+                Allow location access to see weather for your area, or enter
+                coordinates below to view weather for a specific location.
+              </div>
+              <form
+                className="page__location-form"
+                onSubmit={handleManualSubmit}
+              >
+                <input
+                  className="page__location-input"
+                  type="number"
+                  step="any"
+                  placeholder="Latitude"
+                  value={manualLat}
+                  onChange={(e) => setManualLat(e.target.value)}
+                />
+                <input
+                  className="page__location-input"
+                  type="number"
+                  step="any"
+                  placeholder="Longitude"
+                  value={manualLng}
+                  onChange={(e) => setManualLng(e.target.value)}
+                />
+                <button className="page__location-button" type="submit">
+                  Use location
+                </button>
+              </form>
             </div>
           )}
           <Routes>
