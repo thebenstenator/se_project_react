@@ -1,18 +1,23 @@
+// React imports
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import "./App.css";
-import { coordinates, apiKey } from "../../utils/constants";
+
+//Component imports
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import ItemModal from "../ItemModal/ItemModal";
 import MobileModal from "../MobileModal/MobileModal";
 import Profile from "../Profile/Profile";
-import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import DeleteModal from "../DeleteModal/DeleteModal";
+import "./App.css";
+
+// Utility imports
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import { addItem, getItems, removeItem } from "../../utils/api.js";
+import { coordinates, apiKey } from "../../utils/constants";
+import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
