@@ -11,6 +11,8 @@ import MobileModal from "../MobileModal/MobileModal";
 import Profile from "../Profile/Profile";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import DeleteModal from "../DeleteModal/DeleteModal";
+import LoginModal from "../LoginModal/LoginModal.jsx";
+import RegisterModal from "../RegisterModal/RegisterModal.jsx";
 import "./App.css";
 
 // Utility imports
@@ -25,7 +27,7 @@ function App() {
     temp: { F: 999, C: 999 },
     city: "",
   });
-  const [activeModal, setActiveModal] = useState("");
+  const [activeModal, setActiveModal] = useState("register");
   const [selectedCard, setSelectedCard] = useState(null);
   const [clothingItems, setClothingItems] = useState([]);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
@@ -58,6 +60,10 @@ function App() {
     setActiveModal("");
   };
 
+  const handleModalSwitch = (modalName) => {
+    setActiveModal(modalName);
+  };
+
   const onAddItem = (inputValues, handleReset) => {
     const newCardData = {
       name: inputValues.name,
@@ -78,7 +84,7 @@ function App() {
     removeItem(selectedCard._id)
       .then(() => {
         setClothingItems((prev) =>
-          prev.filter((item) => item._id !== selectedCard._id)
+          prev.filter((item) => item._id !== selectedCard._id),
         );
         closeModal();
       })
@@ -109,7 +115,7 @@ function App() {
           setUsingDefaultLocation(true);
           fetchAndSetWeather(coordinates);
         },
-        { timeout: 10000 }
+        { timeout: 10000 },
       );
     } else {
       setUsingDefaultLocation(true);
@@ -227,6 +233,18 @@ function App() {
           activeModal={activeModal}
           onDeleteItem={onDeleteItem}
           card={selectedCard}
+        />
+        <LoginModal
+          handleCloseClick={closeModal}
+          name="login"
+          activeModal={activeModal}
+          handleModalSwitch={handleModalSwitch}
+        />
+        <RegisterModal
+          handleCloseClick={closeModal}
+          name="register"
+          activeModal={activeModal}
+          handleModalSwitch={handleModalSwitch}
         />
       </div>
     </CurrentTemperatureUnitContext.Provider>

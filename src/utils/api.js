@@ -1,18 +1,18 @@
 import { checkResponse } from "./apiHelpers";
 
-const baseUrl = "http://localhost:3001";
+const BASE_URL = "http://localhost:3001";
 const headers = {
   "Content-Type": "application/json",
 };
 
 export const getItems = () => {
-  return fetch(`${baseUrl}/items`, {
+  return fetch(`${BASE_URL}/items`, {
     headers,
   }).then(checkResponse);
 };
 
 export const addItem = ({ name, imageUrl, weather }) => {
-  return fetch(`${baseUrl}/items`, {
+  return fetch(`${BASE_URL}/items`, {
     method: "POST",
     headers,
     body: JSON.stringify({
@@ -24,7 +24,7 @@ export const addItem = ({ name, imageUrl, weather }) => {
 };
 
 export const removeItem = (itemId) => {
-  return fetch(`${baseUrl}/items/${itemId}`, {
+  return fetch(`${BASE_URL}/items/${itemId}`, {
     method: "DELETE",
     headers,
   }).then(checkResponse);

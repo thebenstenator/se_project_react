@@ -9,12 +9,13 @@ function ModalWithForm({
   handleCloseClick,
   name,
   onSubmit,
+  redirectButton,
 }) {
   const { handleOverlayMouseDown } = useModalHandlers(
     activeModal,
     name,
     handleCloseClick,
-    { esc: true }
+    { esc: true },
   );
 
   return (
@@ -31,9 +32,12 @@ function ModalWithForm({
         ></button>
         <form onSubmit={onSubmit} className="modal__form">
           {children}
-          <button className="modal__submit" type="submit">
-            {buttonText}
-          </button>
+          <div className="modal__buttons">
+            <button className="modal__submit" type="submit">
+              {buttonText}
+            </button>
+            {redirectButton}
+          </div>
         </form>
       </div>
     </div>
