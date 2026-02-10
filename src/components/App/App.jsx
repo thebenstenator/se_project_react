@@ -13,6 +13,8 @@ import AddItemModal from "../AddItemModal/AddItemModal";
 import DeleteModal from "../DeleteModal/DeleteModal";
 import LoginModal from "../LoginModal/LoginModal.jsx";
 import RegisterModal from "../RegisterModal/RegisterModal.jsx";
+import AppContext from "../../contexts/AppContext.jsx";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
 import "./App.css";
 
 // Utility imports
@@ -21,6 +23,8 @@ import { addItem, getItems, removeItem } from "../../utils/api.js";
 import { coordinates, apiKey } from "../../utils/constants";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import * as auth from "../../utils/auth.js";
+
+// Assets
 import avatar from "../../assets/avatar.svg";
 
 function App() {
@@ -29,7 +33,7 @@ function App() {
     temp: { F: 999, C: 999 },
     city: "",
   });
-  const [activeModal, setActiveModal] = useState("register");
+  const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState(null);
   const [clothingItems, setClothingItems] = useState([]);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
@@ -69,13 +73,14 @@ function App() {
   };
 
   const onAddItem = (inputValues, handleReset) => {
+    const token = localStorage.getItem("jwt");
     const newCardData = {
       name: inputValues.name,
       weather: inputValues.weather,
       imageUrl: inputValues.imageUrl,
     };
 
-    addItem(newCardData)
+    addItem(newCardData, token)
       .then((data) => {
         setClothingItems((prev) => [data, ...prev]);
         closeModal();
@@ -85,6 +90,8 @@ function App() {
   };
 
   const onDeleteItem = (selectedCard) => {
+    const token = localStorage.getItem("jwt");
+
     removeItem(selectedCard._id)
       .then(() => {
         setClothingItems((prev) =>
@@ -105,6 +112,20 @@ function App() {
   };
 
   useEffect(() => {
+    const token = localStorage.getItem("jwt");
+    if (token) {
+      auth
+        .checkToken(token)
+        .then((user) => {
+          setCurrentUser(user);
+          setIsLoggedIn(true);
+        })
+        .catch((error) => {
+          console.error("Token validation failed:", error);
+          localStorage.removeItem("jwt");
+        });
+    }
+
     if (navigator && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -179,120 +200,124 @@ function App() {
   };
 
   return (
-    <CurrentTemperatureUnitContext.Provider
-      value={{ currentTemperatureUnit, handleToggleSwitchChange }}
-    >
-      <div className="page">
-        <div className="page__content">
-          <Header
-            activeModal={activeModal}
-            handleAddClick={handleAddClick}
-            weatherData={weatherData}
-            handleMobileClick={handleMobileClick}
-            currentUser={currentUser}
-            isLoggedIn={isLoggedIn}
-            onSignUpClick={() => setActiveModal("register")}
-            onLogInClick={() => setActiveModal("login")}
-          />
-          {usingDefaultLocation && (
-            <div className="page__location-notice">
-              <div>
-                Location not available — showing weather at the North Pole.
-                Allow location access to see weather for your area, or enter
-                coordinates below to view weather for a specific location.
+    <AppContext.Provider value={{ isLoggedIn }}>
+      <CurrentTemperatureUnitContext.Provider
+        value={{ currentTemperatureUnit, handleToggleSwitchChange }}
+      >
+        <div className="page">
+          <div className="page__content">
+            <Header
+              activeModal={activeModal}
+              handleAddClick={handleAddClick}
+              weatherData={weatherData}
+              handleMobileClick={handleMobileClick}
+              currentUser={currentUser}
+              isLoggedIn={isLoggedIn}
+              onSignUpClick={() => setActiveModal("register")}
+              onLogInClick={() => setActiveModal("login")}
+            />
+            {usingDefaultLocation && (
+              <div className="page__location-notice">
+                <div>
+                  Location not available — showing weather at the North Pole.
+                  Allow location access to see weather for your area, or enter
+                  coordinates below to view weather for a specific location.
+                </div>
+                <form
+                  className="page__location-form"
+                  onSubmit={handleManualSubmit}
+                >
+                  <input
+                    className="page__location-input"
+                    type="number"
+                    step="any"
+                    placeholder="Latitude"
+                    value={manualLat}
+                    onChange={(e) => setManualLat(e.target.value)}
+                  />
+                  <input
+                    className="page__location-input"
+                    type="number"
+                    step="any"
+                    placeholder="Longitude"
+                    value={manualLng}
+                    onChange={(e) => setManualLng(e.target.value)}
+                  />
+                  <button className="page__location-button" type="submit">
+                    Use location
+                  </button>
+                </form>
               </div>
-              <form
-                className="page__location-form"
-                onSubmit={handleManualSubmit}
-              >
-                <input
-                  className="page__location-input"
-                  type="number"
-                  step="any"
-                  placeholder="Latitude"
-                  value={manualLat}
-                  onChange={(e) => setManualLat(e.target.value)}
-                />
-                <input
-                  className="page__location-input"
-                  type="number"
-                  step="any"
-                  placeholder="Longitude"
-                  value={manualLng}
-                  onChange={(e) => setManualLng(e.target.value)}
-                />
-                <button className="page__location-button" type="submit">
-                  Use location
-                </button>
-              </form>
-            </div>
-          )}
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <Main
-                  weatherData={weatherData}
-                  handleCardClick={handleCardClick}
-                  clothingItems={clothingItems}
-                />
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                <Profile
-                  clothingItems={clothingItems}
-                  handleCardClick={handleCardClick}
-                  handleAddClick={handleAddClick}
-                />
-              }
-            />
-          </Routes>
+            )}
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <Main
+                    weatherData={weatherData}
+                    handleCardClick={handleCardClick}
+                    clothingItems={clothingItems}
+                  />
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <Profile
+                      clothingItems={clothingItems}
+                      handleCardClick={handleCardClick}
+                      handleAddClick={handleAddClick}
+                    />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
 
-          <Footer />
+            <Footer />
+          </div>
+          <AddItemModal
+            onAddItem={onAddItem}
+            activeModal={activeModal}
+            handleCloseClick={closeModal}
+          />
+          <ItemModal
+            name="preview"
+            activeModal={activeModal}
+            card={selectedCard}
+            handleCloseClick={closeModal}
+            handleDeleteClick={handleDeleteClick}
+          />
+          <MobileModal
+            name="mobile"
+            handleCloseClick={closeModal}
+            handleAddClick={handleAddClick}
+            activeModal={activeModal}
+          />
+          <DeleteModal
+            handleCloseClick={closeModal}
+            name="delete-confirmation"
+            activeModal={activeModal}
+            onDeleteItem={onDeleteItem}
+            card={selectedCard}
+          />
+          <LoginModal
+            handleCloseClick={closeModal}
+            name="login"
+            activeModal={activeModal}
+            handleModalSwitch={handleModalSwitch}
+            handleLogin={handleLogin}
+          />
+          <RegisterModal
+            handleCloseClick={closeModal}
+            name="register"
+            activeModal={activeModal}
+            handleModalSwitch={handleModalSwitch}
+            handleRegister={handleRegister}
+          />
         </div>
-        <AddItemModal
-          onAddItem={onAddItem}
-          activeModal={activeModal}
-          handleCloseClick={closeModal}
-        />
-        <ItemModal
-          name="preview"
-          activeModal={activeModal}
-          card={selectedCard}
-          handleCloseClick={closeModal}
-          handleDeleteClick={handleDeleteClick}
-        />
-        <MobileModal
-          name="mobile"
-          handleCloseClick={closeModal}
-          handleAddClick={handleAddClick}
-          activeModal={activeModal}
-        />
-        <DeleteModal
-          handleCloseClick={closeModal}
-          name="delete-confirmation"
-          activeModal={activeModal}
-          onDeleteItem={onDeleteItem}
-          card={selectedCard}
-        />
-        <LoginModal
-          handleCloseClick={closeModal}
-          name="login"
-          activeModal={activeModal}
-          handleModalSwitch={handleModalSwitch}
-          handleLogin={handleLogin}
-        />
-        <RegisterModal
-          handleCloseClick={closeModal}
-          name="register"
-          activeModal={activeModal}
-          handleModalSwitch={handleModalSwitch}
-          handleRegister={handleRegister}
-        />
-      </div>
-    </CurrentTemperatureUnitContext.Provider>
+      </CurrentTemperatureUnitContext.Provider>
+    </AppContext.Provider>
   );
 }
 
