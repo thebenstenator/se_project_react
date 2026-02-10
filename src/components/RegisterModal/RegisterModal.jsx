@@ -56,6 +56,7 @@ const RegisterModal = ({
           placeholder="Email"
           value={values.email || ""}
           onChange={handleChange}
+          required
         />
         <span
           className={
@@ -79,6 +80,7 @@ const RegisterModal = ({
           placeholder="Password"
           value={values.password || ""}
           onChange={handleChange}
+          required
         />
         <span
           className={
@@ -102,6 +104,7 @@ const RegisterModal = ({
           placeholder="Name"
           value={values.name || ""}
           onChange={handleChange}
+          required
         />
         <span
           className={
@@ -125,6 +128,7 @@ const RegisterModal = ({
           placeholder="Avatar URL"
           value={values.avatarUrl || ""}
           onChange={handleChange}
+          required
         />
         <span
           className={

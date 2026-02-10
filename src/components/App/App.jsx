@@ -20,6 +20,8 @@ import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import { addItem, getItems, removeItem } from "../../utils/api.js";
 import { coordinates, apiKey } from "../../utils/constants";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
+import * as auth from "../../utils/auth.js";
+import avatar from "../../assets/avatar.svg";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -34,6 +36,8 @@ function App() {
   const [usingDefaultLocation, setUsingDefaultLocation] = useState(false);
   const [manualLat, setManualLat] = useState("");
   const [manualLng, setManualLng] = useState("");
+  const [currentUser, setCurrentUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
@@ -139,6 +143,41 @@ function App() {
     }
   };
 
+  const handleLogin = (values, handleReset) => {
+    auth
+      .login({ email: values.email, password: values.password })
+      .then((data) => {
+        localStorage.setItem("jwt", data.token);
+        setCurrentUser({ name: "User Name", avatar: avatar });
+        setIsLoggedIn(true);
+        closeModal();
+        handleReset();
+      })
+      .catch((error) => {
+        console.error("Login failed:", error);
+      });
+  };
+
+  const handleRegister = (values, handleReset) => {
+    auth
+      .register({
+        email: values.email,
+        password: values.password,
+        name: values.name,
+        avatar: values.avatar,
+      })
+      .then((data) => {
+        localStorage.setItem("jwt", data.token);
+        setCurrentUser(data.user);
+        setIsLoggedIn(true);
+        closeModal();
+        handleReset();
+      })
+      .catch((error) => {
+        console.error("Registration failed:", error);
+      });
+  };
+
   return (
     <CurrentTemperatureUnitContext.Provider
       value={{ currentTemperatureUnit, handleToggleSwitchChange }}
@@ -150,6 +189,10 @@ function App() {
             handleAddClick={handleAddClick}
             weatherData={weatherData}
             handleMobileClick={handleMobileClick}
+            currentUser={currentUser}
+            isLoggedIn={isLoggedIn}
+            onSignUpClick={() => setActiveModal("register")}
+            onLogInClick={() => setActiveModal("login")}
           />
           {usingDefaultLocation && (
             <div className="page__location-notice">
@@ -239,12 +282,14 @@ function App() {
           name="login"
           activeModal={activeModal}
           handleModalSwitch={handleModalSwitch}
+          handleLogin={handleLogin}
         />
         <RegisterModal
           handleCloseClick={closeModal}
           name="register"
           activeModal={activeModal}
           handleModalSwitch={handleModalSwitch}
+          handleRegister={handleRegister}
         />
       </div>
     </CurrentTemperatureUnitContext.Provider>
