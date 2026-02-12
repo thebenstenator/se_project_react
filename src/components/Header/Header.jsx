@@ -1,22 +1,29 @@
+import { Link } from "react-router-dom";
+import { useContext } from "react";
 import "./Header.css";
 import logo from "../../assets/logo.svg";
 import avatar from "../../assets/avatar.svg";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
-import { Link } from "react-router-dom";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function Header({
   handleAddClick,
   weatherData,
   handleMobileClick,
-  currentUser,
-  isLoggedIn,
   onSignUpClick,
   onLogInClick,
 }) {
+  const currentUser = useContext(CurrentUserContext);
+  const isLoggedIn = !!currentUser;
+
   const currentDate = new Date().toLocaleDateString("default", {
     month: "long",
     day: "numeric",
   });
+
+  const getInitial = (name) => {
+    return name ? name.charAt(0).toUpperCase() : "?";
+  };
 
   return (
     <header className="header">
@@ -44,14 +51,20 @@ function Header({
             + Add Clothes
           </button>
           <Link className="header__user-container" to="/profile">
-            <p className="header__username">
-              {currentUser?.name || "Terrence Tegegne"}
-            </p>
-            <img
-              src={currentUser?.avatar || avatar}
-              alt={currentUser?.name || "User"}
-              className="header__avatar"
-            />
+            <p className="header__username">{currentUser.name}</p>
+            {currentUser.avatar ? (
+              <img
+                src={currentUser.avatar}
+                alt={currentUser.name}
+                className="header__avatar"
+              />
+            ) : (
+              <div className="header__avatar-placeholder">
+                <span className="header__avatar-initial">
+                  {getInitial(currentUser.name)}
+                </span>
+              </div>
+            )}
           </Link>
         </>
       ) : (

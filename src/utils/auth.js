@@ -22,7 +22,7 @@ export const login = ({ email, password }) => {
 };
 
 export const checkToken = (token) => {
-  return fetch(`{${BASE_URL}/users/me`, {
+  return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

@@ -3,11 +3,11 @@ import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 
 const RegisterModal = ({
   activeModal,
-  handleLogin,
   handleCloseClick,
   handleModalSwitch,
+  handleRegister,
 }) => {
-  const defaultValues = { email: "", password: "", name: "", avatarUrl: "" };
+  const defaultValues = { email: "", password: "", name: "", avatar: "" };
   const {
     values,
     handleChange,
@@ -22,7 +22,7 @@ const RegisterModal = ({
     evt.preventDefault();
     const valid = validateForm();
     if (!valid) return;
-    handleLogin(data, handleReset);
+    handleRegister(values, handleReset);
   }
 
   return (
@@ -115,28 +115,28 @@ const RegisterModal = ({
           {errors.name}
         </span>
       </label>
-      <label htmlFor="avatarUrl" className="modal__label">
-        AvatarUrl{""}
+      <label htmlFor="avatar" className="modal__label">
+        Avatar URL{""}
         <input
           type="url"
-          name="avatarUrl"
+          name="avatar"
           className={
             "modal__input " +
-            (isSubmitted && errors.avatarUrl ? "modal__input_invalid" : "")
+            (isSubmitted && errors.avatar ? "modal__input_invalid" : "")
           }
-          id="avatarUrl"
+          id="avatar"
           placeholder="Avatar URL"
-          value={values.avatarUrl || ""}
+          value={values.avatar || ""}
           onChange={handleChange}
           required
         />
         <span
           className={
             "modal__error " +
-            (isSubmitted && errors.avatarUrl ? "modal__error_visible" : "")
+            (isSubmitted && errors.avatar ? "modal__error_visible" : "")
           }
         >
-          {errors.avatarUrl}
+          {errors.avatar}
         </span>
       </label>
     </ModalWithForm>
