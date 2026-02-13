@@ -1,7 +1,12 @@
 .sidebar {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-shrink: 0;
+  align-items: center;
+}
+
+.sidebar__user-info {
+  display: flex;
   align-items: center;
 }
 
@@ -17,4 +22,33 @@
   font-size: 20px;
   line-height: 1;
   margin: 0;
+}
+
+.sidebar__buttons {
+  display: flex;
+  flex-direction: column;
+  font-family: "Cabinet Grotesk";
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.sidebar__edit-profile-button {
+  color: #000000;
+  border: none;
+  background-color: transparent;
+  margin: 0;
+  margin-top: 24px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.sidebar__logout-button {
+  color: #000000;
+  border: none;
+  background-color: transparent;
+  margin: 0;
+  margin-top: 8px;
+  cursor: pointer;
+  text-align: left;
 }

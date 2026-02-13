@@ -15,6 +15,7 @@ export const addItem = ({ name, imageUrl, weather }, token) => {
   return fetch(`${BASE_URL}/items`, {
     method: "POST",
     headers: {
+      "Content-Type": "application/json",
       authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
@@ -29,7 +30,22 @@ export const removeItem = (itemId, token) => {
   return fetch(`${BASE_URL}/items/${itemId}`, {
     method: "DELETE",
     headers: {
+      "Content-Type": "application/json",
       authorization: `Bearer ${token}`,
     },
+  }).then(checkResponse);
+};
+
+export const updateCurrentUser = ({ name, avatar }, token) => {
+  return fetch(`${BASE_URL}/users/me`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      name,
+      avatar,
+    }),
   }).then(checkResponse);
 };
