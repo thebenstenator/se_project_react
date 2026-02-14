@@ -86,6 +86,10 @@
 
 .header__avatar {
   margin-left: 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .header__avatar-placeholder {

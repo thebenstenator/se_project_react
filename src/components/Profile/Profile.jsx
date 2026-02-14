@@ -7,14 +7,20 @@ function Profile({
   handleCardClick,
   handleAddClick,
   handleEditProfileClick,
+  handleCardLike,
+  handleSignOut,
 }) {
   return (
     <section className="profile">
-      <SideBar handleEditProfileClick={handleEditProfileClick} />
+      <SideBar
+        handleEditProfileClick={handleEditProfileClick}
+        handleSignOut={handleSignOut}
+      />
       <ClothesSection
         clothingItems={clothingItems}
         handleCardClick={handleCardClick}
         handleAddClick={handleAddClick}
+        handleCardLike={handleCardLike}
       />
     </section>
   );

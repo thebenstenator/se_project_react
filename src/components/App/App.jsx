@@ -19,12 +19,7 @@ import "./App.css";
 
 // Utility imports
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
-import {
-  addItem,
-  getItems,
-  removeItem,
-  updateCurrentUser,
-} from "../../utils/api.js";
+import * as api from "../../utils/api.js";
 import { coordinates, apiKey } from "../../utils/constants";
 import AppContext from "../../contexts/AppContext.jsx";
 import CurrentUserContext from "../../contexts/CurrentUserContext.jsx";
@@ -91,7 +86,8 @@ function App() {
       imageUrl: inputValues.imageUrl,
     };
 
-    addItem(newCardData, token)
+    api
+      .addItem(newCardData, token)
       .then((data) => {
         setClothingItems((prev) => [data, ...prev]);
         closeModal();
@@ -103,7 +99,8 @@ function App() {
   const onDeleteItem = (selectedCard) => {
     const token = localStorage.getItem("jwt");
 
-    removeItem(selectedCard._id, token)
+    api
+      .removeItem(selectedCard._id, token)
       .then(() => {
         setClothingItems((prev) =>
           prev.filter((item) => item._id !== selectedCard._id),
@@ -121,49 +118,6 @@ function App() {
       })
       .catch(console.error);
   };
-
-  useEffect(() => {
-    const token = localStorage.getItem("jwt");
-    if (token) {
-      auth
-        .checkToken(token)
-        .then((user) => {
-          setCurrentUser(user);
-          setIsLoggedIn(true);
-        })
-        .catch((error) => {
-          console.error("Token validation failed:", error);
-          localStorage.removeItem("jwt");
-        });
-    }
-
-    if (navigator && navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setUsingDefaultLocation(false);
-          fetchAndSetWeather({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          });
-        },
-        (error) => {
-          console.warn("Geolocation failed, using default coordinates:", error);
-          setUsingDefaultLocation(true);
-          fetchAndSetWeather(coordinates);
-        },
-        { timeout: 10000 },
-      );
-    } else {
-      setUsingDefaultLocation(true);
-      fetchAndSetWeather(coordinates);
-    }
-
-    getItems()
-      .then((data) => {
-        setClothingItems(data.reverse());
-      })
-      .catch(console.error);
-  }, []);
 
   const handleManualSubmit = (evt) => {
     evt.preventDefault();
@@ -213,7 +167,8 @@ function App() {
   const onEditProfile = (values, handleReset) => {
     const token = localStorage.getItem("jwt");
 
-    updateCurrentUser({ name: values.name, avatar: values.avatar }, token)
+    api
+      .updateCurrentUser({ name: values.name, avatar: values.avatar }, token)
       .then((updatedUser) => {
         setCurrentUser(updatedUser);
         closeModal();
@@ -221,6 +176,78 @@ function App() {
       })
       .catch(console.error);
   };
+
+  const handleCardLike = ({ id, isLiked }) => {
+    const token = localStorage.getItem("jwt");
+
+    !isLiked
+      ? api
+          .addCardLike(id, token)
+          .then((updatedCard) => {
+            setClothingItems((cards) =>
+              cards.map((item) => (item._id === id ? updatedCard : item)),
+            );
+          })
+          .catch((err) => console.log(err))
+      : api
+          .removeCardLike(id, token)
+          .then((updatedCard) => {
+            setClothingItems((cards) =>
+              cards.map((item) => (item._id === id ? updatedCard : item)),
+            );
+          })
+          .catch((err) => console.log(err));
+  };
+
+  const handleSignOut = () => {
+    localStorage.removeItem("jwt");
+    setCurrentUser(null);
+    setIsLoggedIn(false);
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem("jwt");
+    if (token) {
+      auth
+        .checkToken(token)
+        .then((user) => {
+          setCurrentUser(user);
+          setIsLoggedIn(true);
+        })
+        .catch((error) => {
+          console.error("Token validation failed:", error);
+          localStorage.removeItem("jwt");
+        });
+    }
+
+    if (navigator && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUsingDefaultLocation(false);
+          fetchAndSetWeather({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        (error) => {
+          console.warn("Geolocation failed, using default coordinates:", error);
+          setUsingDefaultLocation(true);
+          fetchAndSetWeather(coordinates);
+        },
+        { timeout: 10000 },
+      );
+    } else {
+      setUsingDefaultLocation(true);
+      fetchAndSetWeather(coordinates);
+    }
+
+    api
+      .getItems()
+      .then((data) => {
+        setClothingItems(data.reverse());
+      })
+      .catch(console.error);
+  }, []);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -281,6 +308,7 @@ function App() {
                       weatherData={weatherData}
                       handleCardClick={handleCardClick}
                       clothingItems={clothingItems}
+                      handleCardLike={handleCardLike}
                     />
                   }
                 />
@@ -293,6 +321,8 @@ function App() {
                         handleCardClick={handleCardClick}
                         handleAddClick={handleAddClick}
                         handleEditProfileClick={handleEditProfileClick}
+                        handleCardLike={handleCardLike}
+                        handleSignOut={handleSignOut}
                       />
                     </ProtectedRoute>
                   }

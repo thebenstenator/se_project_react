@@ -14,6 +14,8 @@
   margin-right: 16px;
   width: 56px;
   height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .sidebar__username {

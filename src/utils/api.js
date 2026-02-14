@@ -49,3 +49,23 @@ export const updateCurrentUser = ({ name, avatar }, token) => {
     }),
   }).then(checkResponse);
 };
+
+export const addCardLike = (itemId, token) => {
+  return fetch(`${BASE_URL}/items/${itemId}/likes`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+  }).then(checkResponse);
+};
+
+export const removeCardLike = (itemId, token) => {
+  return fetch(`${BASE_URL}/items/${itemId}/likes`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+  }).then(checkResponse);
+};

@@ -6,11 +6,17 @@
   cursor: pointer;
 }
 
-.card__name {
+.card__header {
   position: absolute;
   top: 15px;
   left: 50%;
   transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card__name {
   margin: 0;
   background-color: #fff;
   color: rgba(0, 0, 0, 0.6);
@@ -30,6 +36,27 @@
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 12px;
   display: block;
+}
+
+.card__like-button {
+  width: 18px;
+  height: 15px;
+  background: url("../../assets/like-button.svg") center no-repeat;
+  background-size: contain;
+  border: none;
+  cursor: pointer;
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+.card__like-button_active {
+  opacity: 1;
+  background: url("../../assets/like-button-filled.svg") center no-repeat;
+  background-size: contain;
+}
+
+.card__like-button:hover {
+  opacity: 1;
 }
 
 @media screen and (max-width: 630px) {
