@@ -8,7 +8,6 @@ const AddItemModal = ({ activeModal, onAddItem, handleCloseClick }) => {
     handleChange,
     handleReset,
     errors,
-    isValid,
     validateForm,
     isSubmitted,
   } = useFormWithValidation(defaultValues);
@@ -29,7 +28,7 @@ const AddItemModal = ({ activeModal, onAddItem, handleCloseClick }) => {
       activeModal={activeModal}
       onSubmit={handleSubmit}
     >
-      <label htmlFor="name" className="modal__label">
+      <label htmlFor="add-garent-name" className="modal__label">
         Name{""}
         <input
           type="text"
@@ -38,7 +37,7 @@ const AddItemModal = ({ activeModal, onAddItem, handleCloseClick }) => {
             "modal__input " +
             (isSubmitted && errors.name ? "modal__input_invalid" : "")
           }
-          id="name"
+          id="add-garment-name"
           placeholder="Name"
           value={values.name || ""}
           onChange={handleChange}
@@ -52,7 +51,7 @@ const AddItemModal = ({ activeModal, onAddItem, handleCloseClick }) => {
           {errors.name}
         </span>
       </label>
-      <label htmlFor="imageUrl" className="modal__label">
+      <label htmlFor="add-garment-imageUrl" className="modal__label">
         Image URL{""}
         <input
           type="text"
@@ -61,7 +60,7 @@ const AddItemModal = ({ activeModal, onAddItem, handleCloseClick }) => {
             "modal__input " +
             (isSubmitted && errors.imageUrl ? "modal__input_invalid" : "")
           }
-          id="imageUrl"
+          id="add-garment-imageUrl"
           placeholder="Image URL"
           value={values.imageUrl || ""}
           onChange={handleChange}

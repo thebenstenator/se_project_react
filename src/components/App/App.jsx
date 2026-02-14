@@ -1,6 +1,6 @@
 // React imports
 import { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 //Component imports
 import Header from "../Header/Header";
@@ -41,6 +41,8 @@ function App() {
   const [manualLng, setManualLng] = useState("");
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
@@ -135,6 +137,7 @@ function App() {
         setIsLoggedIn(true);
         closeModal();
         handleReset();
+        navigate("/");
       })
       .catch((error) => {
         console.error("Login failed:", error);
@@ -155,6 +158,7 @@ function App() {
         setIsLoggedIn(true);
         closeModal();
         handleReset();
+        navigate("/");
       })
       .catch((error) => {
         console.error("Registration failed:", error);
@@ -259,8 +263,6 @@ function App() {
                 handleAddClick={handleAddClick}
                 weatherData={weatherData}
                 handleMobileClick={handleMobileClick}
-                currentUser={currentUser}
-                isLoggedIn={isLoggedIn}
                 onSignUpClick={() => setActiveModal("register")}
                 onLogInClick={() => setActiveModal("login")}
               />

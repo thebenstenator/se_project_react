@@ -13,7 +13,6 @@ const RegisterModal = ({
     handleChange,
     handleReset,
     errors,
-    isValid,
     validateForm,
     isSubmitted,
   } = useFormWithValidation(defaultValues);
@@ -43,7 +42,7 @@ const RegisterModal = ({
         </button>
       }
     >
-      <label htmlFor="email" className="modal__label">
+      <label htmlFor="register-email" className="modal__label">
         Email{""}
         <input
           type="email"
@@ -52,7 +51,7 @@ const RegisterModal = ({
             "modal__input " +
             (isSubmitted && errors.email ? "modal__input_invalid" : "")
           }
-          id="email"
+          id="register-email"
           placeholder="Email"
           value={values.email || ""}
           onChange={handleChange}
@@ -66,7 +65,7 @@ const RegisterModal = ({
           {errors.email}
         </span>
       </label>
-      <label htmlFor="password" className="modal__label">
+      <label htmlFor="register-password" className="modal__label">
         Password{""}
         <input
           type="password"
@@ -75,7 +74,7 @@ const RegisterModal = ({
             "modal__input " +
             (isSubmitted && errors.password ? "modal__input_invalid" : "")
           }
-          id="password"
+          id="register-password"
           placeholder="Password"
           value={values.password || ""}
           onChange={handleChange}
@@ -89,7 +88,7 @@ const RegisterModal = ({
           {errors.password}
         </span>
       </label>
-      <label htmlFor="name" className="modal__label">
+      <label htmlFor="register-name" className="modal__label">
         Name{""}
         <input
           type="text"
@@ -112,7 +111,7 @@ const RegisterModal = ({
           {errors.name}
         </span>
       </label>
-      <label htmlFor="avatar" className="modal__label">
+      <label htmlFor="register-avatar" className="modal__label">
         Avatar URL{""}
         <input
           type="url"
@@ -121,7 +120,7 @@ const RegisterModal = ({
             "modal__input " +
             (isSubmitted && errors.avatar ? "modal__input_invalid" : "")
           }
-          id="avatar"
+          id="register-avatar"
           placeholder="Avatar URL"
           value={values.avatar || ""}
           onChange={handleChange}

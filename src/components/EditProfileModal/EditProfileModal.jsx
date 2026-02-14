@@ -16,7 +16,6 @@ const EditProfileModal = ({ activeModal, handleCloseClick, onEditProfile }) => {
     handleChange,
     handleReset,
     errors,
-    isValid,
     validateForm,
     isSubmitted,
     setValues,
@@ -47,7 +46,7 @@ const EditProfileModal = ({ activeModal, handleCloseClick, onEditProfile }) => {
       activeModal={activeModal}
       onSubmit={handleSubmit}
     >
-      <label htmlFor="name" className="modal__label">
+      <label htmlFor="edit-profile-name" className="modal__label">
         Name *{""}
         <input
           type="text"
@@ -56,7 +55,7 @@ const EditProfileModal = ({ activeModal, handleCloseClick, onEditProfile }) => {
             "modal__input " +
             (isSubmitted && errors.name ? "modal__input_invalid" : "")
           }
-          id="name"
+          id="edit-profile-name"
           placeholder="Name"
           value={values.name || ""}
           onChange={handleChange}
@@ -71,7 +70,7 @@ const EditProfileModal = ({ activeModal, handleCloseClick, onEditProfile }) => {
           {errors.name}
         </span>
       </label>
-      <label htmlFor="avatar" className="modal__label">
+      <label htmlFor="edit-profile-avatar" className="modal__label">
         Avatar *{""}
         <input
           type="url"
@@ -80,7 +79,7 @@ const EditProfileModal = ({ activeModal, handleCloseClick, onEditProfile }) => {
             "modal__input " +
             (isSubmitted && errors.avatar ? "modal__input_invalid" : "")
           }
-          id="avatar"
+          id="edit-profile-avatar"
           placeholder="Avatar"
           value={values.avatar || ""}
           onChange={handleChange}

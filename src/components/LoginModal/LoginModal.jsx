@@ -13,7 +13,6 @@ const LoginModal = ({
     handleChange,
     handleReset,
     errors,
-    isValid,
     validateForm,
     isSubmitted,
   } = useFormWithValidation(defaultValues);
@@ -43,7 +42,7 @@ const LoginModal = ({
         </button>
       }
     >
-      <label htmlFor="email" className="modal__label">
+      <label htmlFor="login-email" className="modal__label">
         Email{""}
         <input
           type="email"
@@ -52,7 +51,7 @@ const LoginModal = ({
             "modal__input " +
             (isSubmitted && errors.email ? "modal__input_invalid" : "")
           }
-          id="email"
+          id="login-email"
           placeholder="Email"
           value={values.email || ""}
           onChange={handleChange}
@@ -66,7 +65,7 @@ const LoginModal = ({
           {errors.email}
         </span>
       </label>
-      <label htmlFor="password" className="modal__label">
+      <label htmlFor="login-password" className="modal__label">
         Password{""}
         <input
           type="password"
@@ -75,7 +74,7 @@ const LoginModal = ({
             "modal__input " +
             (isSubmitted && errors.password ? "modal__input_invalid" : "")
           }
-          id="password"
+          id="login-password"
           placeholder="Password"
           value={values.password || ""}
           onChange={handleChange}

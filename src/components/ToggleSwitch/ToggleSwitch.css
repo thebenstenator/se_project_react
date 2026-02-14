@@ -18,7 +18,7 @@
   left: 0px;
 }
 
-.toggle-switch:hover .toggle-swith__checkbox:checked ~ .toggle-switch__slider {
+.toggle-switch:hover .toggle-switch__checkbox:checked ~ .toggle-switch__slider {
   left: 24px;
 }
 
