@@ -26,9 +26,6 @@ import CurrentUserContext from "../../contexts/CurrentUserContext.jsx";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import * as auth from "../../utils/auth.js";
 
-// Assets
-import avatar from "../../assets/avatar.svg";
-
 function App() {
   const [weatherData, setWeatherData] = useState({
     type: "",
@@ -130,14 +127,11 @@ function App() {
   };
 
   const handleLogin = (values, handleReset) => {
-    console.log("login attempt with", values);
     auth
       .login({ email: values.email, password: values.password })
       .then((data) => {
-        console.log("Login response", data);
         localStorage.setItem("jwt", data.token);
         setCurrentUser(data.user);
-        console.log("current user set to", data.user);
         setIsLoggedIn(true);
         closeModal();
         handleReset();
