@@ -105,7 +105,7 @@
 }
 
 .modal__input_invalid {
-  border-bottom: solid 1px #ff4d4d;
+  border-bottom: solid 1px #ff4d4d !important;
 }
 
 .modal__radio-btns {

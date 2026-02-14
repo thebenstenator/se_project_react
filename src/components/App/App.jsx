@@ -130,11 +130,14 @@ function App() {
   };
 
   const handleLogin = (values, handleReset) => {
+    console.log("login attempt with", values);
     auth
       .login({ email: values.email, password: values.password })
       .then((data) => {
+        console.log("Login response", data);
         localStorage.setItem("jwt", data.token);
         setCurrentUser(data.user);
+        console.log("current user set to", data.user);
         setIsLoggedIn(true);
         closeModal();
         handleReset();

@@ -12,13 +12,11 @@ export function useFormWithValidation(defaultValues = {}) {
       if (!value || String(value).trim() === "") message = "Name is required";
       if (value.length < 1) message = "Name must be at least 1 character";
       if (value.length > 30) message = "Name must be at most 30 characters";
-    } else if (name === "imageUrl") {
+    } else if (name === "imageUrl" || name === "avatar") {
       if (!value || String(value).trim() === "")
         message = "Image URL is required";
       else {
         try {
-          // URL constructor will throw for invalid urls
-          // allow protocol-relative urls by ensuring a protocol exists
           new URL(value);
         } catch (e) {
           message = "Enter a valid URL";
@@ -26,6 +24,18 @@ export function useFormWithValidation(defaultValues = {}) {
       }
     } else if (name === "weather") {
       if (!value) message = "Select the weather type";
+    } else if (name === "email") {
+      if (!value || String(value).trim() === "") {
+        message = "Email is required";
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+        message = "Enter a valid email address";
+      }
+    } else if (name === "password") {
+      if (!value || String(value).trim() === "") {
+        message = "Password is required";
+      } else if (value.length < 5) {
+        message = "Password must be at least 5 characters";
+      }
     }
     return message;
   };
@@ -54,8 +64,8 @@ export function useFormWithValidation(defaultValues = {}) {
       setErrors((prev) => ({ ...prev, [name]: validateField(name, value) }));
       setIsValid(
         Object.values({ ...errors, [name]: validateField(name, value) }).every(
-          (m) => !m
-        )
+          (m) => !m,
+        ),
       );
     }
   };
@@ -72,7 +82,7 @@ export function useFormWithValidation(defaultValues = {}) {
       setIsValid(newIsValid);
       setIsSubmitted(false);
     },
-    [defaultValues]
+    [defaultValues],
   );
 
   return {

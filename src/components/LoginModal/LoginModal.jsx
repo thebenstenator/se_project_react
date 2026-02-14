@@ -56,7 +56,6 @@ const LoginModal = ({
           placeholder="Email"
           value={values.email || ""}
           onChange={handleChange}
-          required
         />
         <span
           className={
@@ -80,7 +79,6 @@ const LoginModal = ({
           placeholder="Password"
           value={values.password || ""}
           onChange={handleChange}
-          required
         />
         <span
           className={
