@@ -152,13 +152,11 @@ function App() {
         name: values.name,
         avatar: values.avatar,
       })
-      .then((data) => {
-        localStorage.setItem("jwt", data.token);
-        setCurrentUser(data.user);
-        setIsLoggedIn(true);
-        closeModal();
-        handleReset();
-        navigate("/");
+      .then(() => {
+        handleLogin(
+          { email: values.email, password: values.password },
+          handleReset,
+        );
       })
       .catch((error) => {
         console.error("Registration failed:", error);

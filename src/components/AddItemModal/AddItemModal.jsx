@@ -28,7 +28,7 @@ const AddItemModal = ({ activeModal, onAddItem, handleCloseClick }) => {
       activeModal={activeModal}
       onSubmit={handleSubmit}
     >
-      <label htmlFor="add-garent-name" className="modal__label">
+      <label htmlFor="add-garment-name" className="modal__label">
         Name{""}
         <input
           type="text"

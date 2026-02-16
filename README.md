@@ -1,9 +1,5 @@
 # WTWR (What to Wear?)
 
-## For Code Reviewer
-
-I fixed the postman test errors. I tested my ability to register, sign in and add items and I am able to do so. If you are still unable can you share what errors you're having?
-
 **[Link to backend repo](https://github.com/thebenstenator/se_project_express)**
 
 ## Demo

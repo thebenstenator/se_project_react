@@ -28,7 +28,7 @@ const EditProfileModal = ({ activeModal, handleCloseClick, onEditProfile }) => {
         avatar: currentUser.avatar || "",
       });
     }
-  }, [currentUser]);
+  }, [currentUser, activeModal]);
 
   function handleSubmit(evt) {
     evt.preventDefault();

@@ -97,7 +97,7 @@ const RegisterModal = ({
             "modal__input " +
             (isSubmitted && errors.name ? "modal__input_invalid" : "")
           }
-          id="name"
+          id="register-name"
           placeholder="Name"
           value={values.name || ""}
           onChange={handleChange}
