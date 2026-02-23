@@ -2,6 +2,7 @@
   "name": "se_project_react",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://cloudcloset.1ax.us",
   "type": "module",
   "scripts": {
     "dev": "vite --open",
@@ -9,7 +10,7 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "npm run build && scp -r ./dist/* thebenstenator@cloudcloset.1ax.us:/home/thebenstenator/frontend"
   },
   "dependencies": {
     "react": "^18.3.1",

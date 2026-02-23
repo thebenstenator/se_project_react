@@ -1,6 +1,10 @@
 import { checkResponse } from "./apiHelpers";
 
-export const BASE_URL = "http://localhost:3001";
+export const BASE_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://api.cloudcloset.1ax.us"
+    : "http://localhost:3001";
+
 const headers = {
   "Content-Type": "application/json",
 };
@@ -15,7 +19,7 @@ export const addItem = ({ name, imageUrl, weather }, token) => {
   return fetch(`${BASE_URL}/items`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      ...headers,
       authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
@@ -30,7 +34,7 @@ export const removeItem = (itemId, token) => {
   return fetch(`${BASE_URL}/items/${itemId}`, {
     method: "DELETE",
     headers: {
-      "Content-Type": "application/json",
+      ...headers,
       authorization: `Bearer ${token}`,
     },
   }).then(checkResponse);
@@ -40,7 +44,7 @@ export const updateCurrentUser = ({ name, avatar }, token) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: "PATCH",
     headers: {
-      "Content-Type": "application/json",
+      ...headers,
       authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
@@ -54,7 +58,7 @@ export const addCardLike = (itemId, token) => {
   return fetch(`${BASE_URL}/items/${itemId}/likes`, {
     method: "PUT",
     headers: {
-      "Content-Type": "application/json",
+      ...headers,
       authorization: `Bearer ${token}`,
     },
   }).then(checkResponse);
@@ -64,7 +68,7 @@ export const removeCardLike = (itemId, token) => {
   return fetch(`${BASE_URL}/items/${itemId}/likes`, {
     method: "DELETE",
     headers: {
-      "Content-Type": "application/json",
+      ...headers,
       authorization: `Bearer ${token}`,
     },
   }).then(checkResponse);
